@@ -13,7 +13,6 @@ def RomanToDecimal(num):
     ans = 0
     cnt = 0
     for prev, cur in zip(num, num[1:]):
-        
         if cur == prev:
             if (cnt == 0):
                 cnt += 1
