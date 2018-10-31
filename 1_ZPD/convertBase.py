@@ -20,7 +20,7 @@ def toDecimal(k, num):
     assert num, "There should be at least one digit in number"
     A = 0
     for b in num[::-1]:
-        assert 0<=b<k, "All digits should in [0; k)."
+        assert 0<=b<k, "All digits should be in [0; k)."
         A = A * k + b
         
     return A
