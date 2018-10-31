@@ -3,6 +3,8 @@ def decimal2k(A, k):
     A -- natural number
     k -- base 
     """
+    assert A>0, "A shoud be natural number"
+    assert k>1, "base should be greater than 1"
     b = []
     while A > 0:
         b.append(A % k)
