@@ -34,6 +34,36 @@ def DecimalToRoman(num):
             num -= cur
             ans += NUMBERS[cur]
     return ans
+    
+    
+def parseRoman(num):
+    """
+        From roman number to 2 lists of digits (+ and -) 
+    """
+    ans = ([], [])
+    for cur in sorted(NUMBERS.items(), reverse=True):
+        while num.startswith(cur[1]):
+            ans[0].append(cur[1][-1]) # plus
+            if (len(cur[1]) == 2):
+                ans[1].append(cur[1][0]) # minus
+            num = num[len(cur[1]):]
+                
+    return ans
+    
+def sumRoman(r1, r2):
+    print(r1, r2)
+    r1 = parseRoman(r1)
+    r2 = parseRoman(r2)
+    
+    plus = sorted(r1[0] + r2[0], key=lambda x: DIGITS[x], reverse=True)
+    minus = sorted(r1[1] + r2[1], key=lambda x: DIGITS[x], reverse=True)
+    
+    print('plus =', plus)
+    print('minus =', minus)
+    
+    ans = ''.join(plus)
+    return ans
+    
 
 if __name__ == "__main__":
     print("Conversion between Roman and decimal numbers")
@@ -43,7 +73,8 @@ if __name__ == "__main__":
     for r in roman:
         d = RomanToDecimal(r)
         back_r = DecimalToRoman(d)
-        print(r, d, back_r, r == back_r)
+        #print(r, d, back_r, r == back_r)
+        print(r, parseRoman(r))
         
     cnt = 0
     for i in range(1, 4000):
@@ -52,3 +83,5 @@ if __name__ == "__main__":
         #print(i, r, d, i==d)
         cnt += (i == d)
     print("Good double conversions = ", cnt)
+    
+    print(sumRoman('MCMXLVIII', 'CXXIV'))
