@@ -4,15 +4,32 @@ def fromDecimal(A, k):
         k -- base 
     """
     assert A>0, "A should be natural number"
-    assert k>1, "base should be greater than 1"
+    assert k>1, "Base should be greater than 1"
     b = []
     while A > 0:
         b.append(A % k)
         A //= k
     return (tuple(b[::-1]), len(b))
     
-if __name__ == "__main__":
-    print(decimal2k(7, 2))
-    print(decimal2k(8, 2))
+    
+def toDecimal(k, num):
+    """
+        num -- tuple for number in k-based system
+        k -- base 
+    """
+    assert num, "There should be at least one digit in number"
+    A = 0
+    for b in num[::-1]:
+        assert 0<=b<k, "All digits should in [0; k)."
+        A = A * k + b
         
+    return A
+    
+if __name__ == "__main__":
+    print(fromDecimal(7, 2))
+    print(fromDecimal(8, 2))
+    
+    print(toDecimal(2, (1, 1, 0)))
+    print(toDecimal(2, (1, )))
+    
     
