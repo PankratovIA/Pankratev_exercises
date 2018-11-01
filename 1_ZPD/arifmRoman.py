@@ -15,7 +15,9 @@ def parseRoman(num):
     return ans
     
 def compressRoman(num):
-    #print("compress >>> ")
+    """
+        Remove four same digits in a row.
+    """
     tmp = [('DD', 'M'), ('CCCC', 'CD'), ('LL', 'C'), ('LXL', 'XC'),\
      ('XLX', 'L'),\
      ('XXXX', 'XL'), ('VV', 'X'), ('VIV','IX'), ('IIIII', 'V'), ('IIII', 'IV')]
@@ -26,18 +28,15 @@ def compressRoman(num):
         for cur in tmp:
             while cur[0] in num:
                 f = True
-                #print('cur = ', cur)
-                #print('num = ', num)
                 num = num.replace(cur[0], cur[1])
-                #print(num)
-                #break
-    #print("compress <<< ")
     
     return num
     
     
 def sumRoman(r1, r2):
-    #print(r1, r2)
+    """
+        Return r1 + r2
+    """
     r1 = parseRoman(r1)
     r2 = parseRoman(r2)
     
@@ -49,14 +48,8 @@ def sumRoman(r1, r2):
         plus = sorted(plus, key=lambda x: DIGITS[x], reverse=True)
     
     while minus:
-        #print('plus =', plus)
-        #print('minus =', minus)
-        
         plus = sorted(plus, key=lambda x: DIGITS[x], reverse=True)
         minus = sorted(minus, key=lambda x: DIGITS[x], reverse=True)
-    
-        #print('plus =', plus)
-        #print('minus =', minus)
     
         delList = []
         for m in minus:
@@ -75,37 +68,18 @@ def sumRoman(r1, r2):
               'M':{'I':'DCCCCLXXXXVIIII', 'V':'DCCCCLXXXXV',\
                    'X':'DCCCCLXXXX', 'C':'DCCCC'} }
         
-        #print('plus =', plus)
-        #print('minus =', minus)
-        
         if not minus:
             break
             
-        #print('minus = ', minus)
         x = minus.pop()
-        
-        #print('x = ', x)
         
         idx = len(plus) - 1
         
         while (DIGITS[plus[idx]] < DIGITS[x]):
             idx-=1
         
-        #print('plus[idx] = ', plus[idx])
-        
         plus = plus[:idx] + list(tmp[plus[idx]][x]) + plus[idx+1:]
-        
-        #print(plus)
-        
-        #plus = compressRoman(''.join(plus))
-        
-        #plus = parseRoman(plus)
-        #minus += plus[1]
-        #plus = plus[0]
 
-        #print('plus =', plus)
-        #print('minus =', minus)
-    #print(plus)
     ans = compressRoman(''.join(plus))
     
     return ans
