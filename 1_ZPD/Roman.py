@@ -51,8 +51,10 @@ def parseRoman(num):
     return ans
     
 def compressRoman(num):
-    tmp = [('DD', 'M'), ('CCCC', 'CD'), ('LL', 'C'), ('LXL', 'XC'), ('XXXX', 'XL'), \
-    ('VV', 'X'), ('VIV','IX'), ('IIIII', 'V'), ('IIII', 'IV')]
+    #print("compress >>> ")
+    tmp = [('DD', 'M'), ('CCCC', 'CD'), ('LL', 'C'), ('LXL', 'XC'),\
+     ('XLX', 'L'),\
+     ('XXXX', 'XL'), ('VV', 'X'), ('VIV','IX'), ('IIIII', 'V'), ('IIII', 'IV')]
     
     f = True
     while f:
@@ -60,31 +62,37 @@ def compressRoman(num):
         for cur in tmp:
             while cur[0] in num:
                 f = True
-                #print(cur)
-                print(num)
+                #print('cur = ', cur)
+                #print('num = ', num)
                 num = num.replace(cur[0], cur[1])
-                print(num)
+                #print(num)
                 #break
+    #print("compress <<< ")
+    
     return num
     
     
 def sumRoman(r1, r2):
-    print(r1, r2)
+    #print(r1, r2)
     r1 = parseRoman(r1)
     r2 = parseRoman(r2)
+    
     
     plus = r1[0] + r2[0]
     minus = r1[1] + r2[1]
     
+    if not minus:
+        plus = sorted(plus, key=lambda x: DIGITS[x], reverse=True)
+    
     while minus:
-        print('plus =', plus)
-        print('minus =', minus)
+        #print('plus =', plus)
+        #print('minus =', minus)
         
         plus = sorted(plus, key=lambda x: DIGITS[x], reverse=True)
         minus = sorted(minus, key=lambda x: DIGITS[x], reverse=True)
     
-        print('plus =', plus)
-        print('minus =', minus)
+        #print('plus =', plus)
+        #print('minus =', minus)
     
         delList = []
         for m in minus:
@@ -99,34 +107,37 @@ def sumRoman(r1, r2):
          'V':'XXXXV', 'X': 'XXXX'}, 'C':{'I': 'LXXXXVIIII',\
          'V':'XXXXXXXXXV', 'X':'LXXXX'}}
         
-        print('plus =', plus)
-        print('minus =', minus)
+        #print('plus =', plus)
+        #print('minus =', minus)
         
         if not minus:
             break
             
-        print('minus = ', minus)
+        #print('minus = ', minus)
         x = minus.pop()
         
-        print('x = ', x)
+        #print('x = ', x)
         
         idx = len(plus) - 1
         
         while (DIGITS[plus[idx]] < DIGITS[x]):
             idx-=1
         
-        print('plus[idx] = ', plus[idx])
+        #print('plus[idx] = ', plus[idx])
         
-        plus = plus[:idx] + list(tmp[x][plus[idx]]) + plus[idx+1:]
-        plus = compressRoman(''.join(plus))
+        plus = plus[:idx] + list(tmp[plus[idx]][x]) + plus[idx+1:]
         
-        plus = parseRoman(plus)
-        minus += plus[1]
-        plus = plus[0]
+        #print(plus)
+        
+        #plus = compressRoman(''.join(plus))
+        
+        #plus = parseRoman(plus)
+        #minus += plus[1]
+        #plus = plus[0]
 
-        print('plus =', plus)
-        print('minus =', minus)
-    
+        #print('plus =', plus)
+        #print('minus =', minus)
+    #print(plus)
     ans = compressRoman(''.join(plus))
     
     return ans
@@ -151,6 +162,7 @@ if __name__ == "__main__":
     #     cnt += (i == d)
     # print("Good double conversions = ", cnt)
     
+    roman = ['XIX', 'IX', 'VIII']
     
     for a in roman:
         for b in roman:
@@ -163,4 +175,17 @@ if __name__ == "__main__":
                 f = (s[0] + s[1] == s[2])
                 print(f)
                 assert f
+    
+    MX = 49
+    for x in range(1, MX):
+        for y in range(1, MX):
+            a, b = list(map(DecimalToRoman, [x, y]))
+            c = sumRoman(a, b)
+            print(a + ' + ' + b + ' = ' + c)
+    
+            s = list(map(RomanToDecimal, [a, b, c]))
+            print(s)
+            f = (s[0] + s[1] == s[2])
+            print(f)
+            assert f
     
