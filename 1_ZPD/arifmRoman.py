@@ -67,9 +67,13 @@ def sumRoman(r1, r2):
         for x in delList:
             minus.remove(x)
             
-        tmp= {'V':{'I': 'IIII'}, 'X':{'I':'VIIII'}, 'L':{'I':'XXXXVIIII',\
-         'V':'XXXXV', 'X': 'XXXX'}, 'C':{'I': 'LXXXXVIIII',\
-         'V':'XXXXXXXXXV', 'X':'LXXXX'}}
+        tmp= {'V':{'I': 'IIII'},'X':{'I':'VIIII'},\
+              'L':{'I':'XXXXVIIII', 'V':'XXXXV', 'X': 'XXXX'},\
+              'C':{'I':'LXXXXVIIII','V':'XXXXXXXXXV', 'X':'LXXXX'},\
+              'D':{'I':'CCCCLXXXXVIIII', 'V':'CCCCLXXXXV', 'X':'CCCCLXXXX',\
+                   'C': 'CCCC'},\
+              'M':{'I':'DCCCCLXXXXVIIII', 'V':'DCCCCLXXXXV',\
+                   'X':'DCCCCLXXXX', 'C':'DCCCC'} }
         
         #print('plus =', plus)
         #print('minus =', minus)
@@ -121,15 +125,24 @@ if __name__ == "__main__":
                 print(f)
                 assert f
     
-    MX = 49
-    for x in range(1, MX):
-        for y in range(1, MX):
+    print('MX >>>')
+    MX = 4001
+    for x in range(1, min(MX, 3999)):
+        if (x % 10 == 0):
+            print('First = ', x)
+        for y in range(1, min(MX, 3999-x)):
             a, b = list(map(DecimalToRoman, [x, y]))
             c = sumRoman(a, b)
-            print(a + ' + ' + b + ' = ' + c)
-    
+            #print(a + ' + ' + b + ' = ' + c)
             s = list(map(RomanToDecimal, [a, b, c]))
-            print(s)
+            #print(s)
             f = (s[0] + s[1] == s[2])
-            print(f)
+            #print(f)
+            if not f:
+                print(a + ' + ' + b + ' = ' + c)
+                print(s)
             assert f
+
+    print(MX, 'OK')
+    print('MX <<<')
+
