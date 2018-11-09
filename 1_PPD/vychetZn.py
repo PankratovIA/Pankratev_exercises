@@ -1,4 +1,11 @@
 
+def ExtendedEuclid(a, b):
+  if (b == 0):
+    return (a, 1, 0)
+  dd, xx, yy = Extended-Euclid(b, a % b)
+  d, x, y = dd, yy, xx - (a//b) * yy
+  return (d, x, y)
+
 class Zn:
   def __init__(self, n, elem = 0):
     assert((n > 0) & (0 <= elem < n))
