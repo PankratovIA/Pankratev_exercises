@@ -34,13 +34,14 @@ class Zn:
   def __truediv__(self, other):
     assert(self.n == other.getN())
     """
-      Return 0 for impossible division.
+      Return -1 for impossible division.
     """
     # self / other = x -> other.elem * x = self.elem (mod self.n)
     # other * x + self.n * c = self = w * gcd(other, self.n)
     # other * x1 + self.n * y1 = gcd(other, self.n)
     d, x1, y1 = ExtendedEuclid(other.elem, self.n)
-    #assert(self.elem % d == 0)
+    if self.elem % d != 0:
+      return -1
     w = self.elem // d
     return w * x1
   
@@ -65,6 +66,7 @@ if __name__ == "__main__":
   
   print(a.inRing(10), a.inRing(12))
   
+  zero8 = Zn(8, 0)
   one8 = Zn(8, 1)
   two8 = Zn(8, 2)
   three8 = Zn(8, 3)
@@ -73,4 +75,5 @@ if __name__ == "__main__":
   print('Z8: 2 / 3 =', ans)
   ans = one8 / two8
   print('Z8: 1 / 2 =', ans)
-  
+  ans = zero8 / two8
+  print('Z8: 0 / 2 =', ans)  
