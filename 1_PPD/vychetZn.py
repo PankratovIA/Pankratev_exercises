@@ -8,6 +8,10 @@ def ExtendedEuclid(a, b):
 
 class Zn:
   def __init__(self, n, elem = 0):
+    while elem < 0:
+      elem += n
+    while elem > n:
+      elem -= n
     assert((n > 0) & (0 <= elem < n))
     self.n = n
     self.elem = elem
@@ -43,12 +47,15 @@ class Zn:
     if self.elem % d != 0:
       return -1
     w = self.elem // d
-    return w * x1
+    ans = w * x1
+    # ans should be in [0; self.n)
+    return Zn(self.n, ans)
   
   def inRing(self, num):
     return num % self.n == self.elem
     
- 
+  def __eq__(self, other):
+    return (self.n == other.getN()) & (self.elem == other.getElem())
     
     
   
@@ -77,3 +84,13 @@ if __name__ == "__main__":
   print('Z8: 1 / 2 =', ans)
   ans = zero8 / two8
   print('Z8: 0 / 2 =', ans)  
+  
+  N = 6
+  for x in range(N):
+    for y in range(N):
+      one, two = Zn(N, x), Zn(N, y)
+      mul = one * two
+      div = mul / two
+      print(x, '*', y, ' = ', mul, ' / ', y, ' = ', div, one == div)
+
+  
