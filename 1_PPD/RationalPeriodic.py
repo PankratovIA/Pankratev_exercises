@@ -6,24 +6,19 @@ def toPeriodic(nom, denom, base):
         http://zftsh.online/articles/683
     """
     print(nom, denom)
-    d = dict()
+    d = {nom: -1}
     idx = 0
     digits = []
     while 1:
         cur = (nom * base) // denom
         # print('cur =', cur)
         # print('d =', d)
-        print('digits =', digits)
+        # print('digits =', digits)
         nom = (nom * base) % denom
         if nom in d:
             digits.append(cur)
             period = digits[d[nom]+1:]
             frac = digits[:d[nom]+1]
-            
-            # period = digits[d[nom]:]
-            # frac = digits[:d[nom]]
-            
-            
             return (frac, period)
         digits.append(cur)
         d[nom] = idx
