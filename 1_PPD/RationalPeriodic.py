@@ -48,9 +48,8 @@ def toRational(num, base):
         ans += cur * deg
         deg *= mul
 
-    if (num[2] != (0,)):
-        frac = toDecimal(base, num[2])
-        ans += Fraction(frac, (base ** (len(num[2])) - 1) * (base ** len(num[1])))
+    frac = toDecimal(base, num[2])
+    ans += Fraction(frac, (base ** (len(num[2])) - 1) * (base ** len(num[1])))
 
     return ans
     
