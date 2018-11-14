@@ -1,11 +1,21 @@
+import fractions
+
+from convertBase import fromDecimal
 
 def toPeriodic(nom, denom, base):
     """
         convertation from nom / denom to periodic fraction
-        nom < denom for simplicity
         http://zftsh.online/articles/683
+        return (integer number, fraction, period)
     """
     print(nom, denom)
+    intPart = nom // denom
+    nom %= denom
+    
+    if intPart:
+        intPart = fromDecimal(intPart, base)[0]
+    else:
+        intPart = (0,)
     d = {nom: -1}
     idx = 0
     digits = []
@@ -17,13 +27,13 @@ def toPeriodic(nom, denom, base):
         nom = (nom * base) % denom
         if nom in d:
             digits.append(cur)
-            period = digits[d[nom]+1:]
-            frac = digits[:d[nom]+1]
-            return (frac, period)
+            period = tuple(digits[d[nom]+1:])
+            frac = tuple(digits[:d[nom]+1])
+            return (intPart, frac, period)
         digits.append(cur)
         d[nom] = idx
         idx += 1
-    return (digits, [])
+    return (intPart, tuple(digits), ())
     
 if __name__ == "__main__":
     print("From Rational to periodic")
@@ -36,10 +46,6 @@ if __name__ == "__main__":
     ans = toPeriodic(5, 6, 10)
     print(ans)
     
-    # Take a look on last 3 tests. One or two are wrong.
-    # 10 : 0.375 = 2 : 0.011
-    # 10 : 9/11 = 10 : 0.(81)
-    # 10: 0.123 = 5 : 0.030(14)
     ans = toPeriodic(9, 11, 10)
     print(ans)
     
@@ -47,4 +53,7 @@ if __name__ == "__main__":
     print(ans)
     
     ans = toPeriodic(3, 8, 2)
+    print(ans)
+    
+    ans = toPeriodic(4, 1, 2)
     print(ans)
