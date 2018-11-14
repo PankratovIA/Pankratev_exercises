@@ -18,10 +18,11 @@ def toDecimal(k, num):
         k -- base 
     """
     assert num, "There should be at least one digit in number"
-    A = 0
+    A, deg = 0, 1
     for b in num[::-1]:
         assert 0<=b<k, "All digits should be in [0; k)."
-        A = A * k + b
+        A += b * deg
+        deg *= k
         
     return A
     

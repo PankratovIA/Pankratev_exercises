@@ -1,6 +1,6 @@
-import fractions
+from fractions import Fraction
 
-from convertBase import fromDecimal
+from convertBase import *
 
 def toPeriodic(nom, denom, base):
     """
@@ -35,6 +35,16 @@ def toPeriodic(nom, denom, base):
         idx += 1
     return (intPart, tuple(digits), ())
     
+def toRational(num, base):
+    print("toRational >>>")
+    print(num)
+    intPart = toDecimal(base, num[0])
+    print("intPart", intPart)
+    ans = Fraction(intPart)
+    
+    print("toRational <<<")
+    return ans
+    
 if __name__ == "__main__":
     print("From Rational to periodic")
     ans = toPeriodic(3, 8, 10)
@@ -57,3 +67,8 @@ if __name__ == "__main__":
     
     ans = toPeriodic(4, 1, 2)
     print(ans)
+    
+    ans = toRational(ans, 2)
+    print("Rational =", ans)
+    
+    
