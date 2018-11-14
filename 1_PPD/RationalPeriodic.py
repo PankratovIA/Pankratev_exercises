@@ -36,35 +36,62 @@ def toPeriodic(nom, denom, base):
     return (intPart, tuple(digits), ())
     
 def toRational(num, base):
-    print("toRational >>>")
-    print(num)
+    """
+        num = (integer number, fraction, period)
+        https://studfiles.net/preview/1700684/page:2/
+    """
     intPart = toDecimal(base, num[0])
-    print("intPart", intPart)
     ans = Fraction(intPart)
     
-    print("toRational <<<")
+    deg, mul  = Fraction(1, base), Fraction(1, base)
+    for cur in num[1]:
+        ans += cur * deg
+        deg *= mul
+
+    if (num[2] != (0,)):
+        frac = toDecimal(base, num[2])
+        ans += Fraction(frac, (base ** (len(num[2])) - 1) * (base ** len(num[1])))
+
     return ans
     
 if __name__ == "__main__":
-    print("From Rational to periodic")
+    print("From Rational to periodic and back")
     ans = toPeriodic(3, 8, 10)
     print(ans)
     
+    ans = toRational(ans, 10)
+    print("Rational =", ans)
+    
     ans = toPeriodic(4, 9, 10)
     print(ans)
+
+    ans = toRational(ans, 10)
+    print("Rational =", ans)
     
     ans = toPeriodic(5, 6, 10)
     print(ans)
     
+    ans = toRational(ans, 10)
+    print("Rational =", ans)
+    
     ans = toPeriodic(9, 11, 10)
     print(ans)
+
+    ans = toRational(ans, 10)
+    print("Rational =", ans)
     
     ans = toPeriodic(123, 1000, 5)
     print(ans)
+
+    ans = toRational(ans, 5)
+    print("Rational =", ans)
     
     ans = toPeriodic(3, 8, 2)
     print(ans)
     
+    ans = toRational(ans, 2)
+    print("Rational =", ans)
+        
     ans = toPeriodic(4, 1, 2)
     print(ans)
     
